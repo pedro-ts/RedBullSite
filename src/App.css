@@ -1,48 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
-:root{
+:root {
   --vermelho: #e60912;
   font-family: "Nunito", sans-serif;
 }
+
 /* Tela cheia e reset simples */
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
+
 body {
   margin: 0;
   overflow-x: hidden;
-  background: #000; /* fallback */
+  background: #000;
   color: #fff;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
-h1{
+
+h1 {
   font-family: "Bebas Neue", sans-serif;
 }
-/* Camada do Canvas 3D: entre o fundo das sections e o conteúdo .principal */
+
+/* Camada do Canvas 3D */
 .threeLayer {
   position: fixed;
   inset: 0;
-  z-index: 1;            /* atrás do conteúdo */
-  pointer-events: none;  /* não bloqueia cliques/scroll */
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* Sections: funcionam como "fundos" */
+/* Sections */
 main > section {
   min-height: 100vh;
   position: relative;
-  /* z-index: 0;  <-- REMOVIDO para não criar stacking atrás do Canvas */
   display: grid;
   place-items: center;
 }
 
-/* Fundos diferentes por seção */
-section.start { background: radial-gradient(60% 60% at 50% 40%, #0b1020 0%, #04060c 100%); }
-section.midle { background: radial-gradient(60% 60% at 50% 40%, #111c2a 0%, #070b14 100%); }
-section.end   { background: radial-gradient(60% 60% at 50% 40%, #1a1a1a 0%, #0a0a0a 100%); }
+/* Fundos */
+section.start {
+  background: radial-gradient(60% 60% at 50% 40%, #0b1020 0%, #04060c 100%);
+}
+section.midle {
+  background: radial-gradient(60% 60% at 50% 40%, #111c2a 0%, #070b14 100%);
+}
+section.end {
+  background: radial-gradient(60% 60% at 50% 40%, #1a1a1a 0%, #0a0a0a 100%);
+}
 
-/* Header sempre acima do 3D */
-header{
+/* Header */
+header {
   position: relative;
   z-index: 3;
   background: radial-gradient(60% 60% at 50% 40%, #111c2a 0%, #070b14 100%);
@@ -50,104 +61,100 @@ header{
   display: flex;
   justify-content: space-between;
 }
-header img{
+header img {
   height: 3rem;
 }
 
-/* Conteúdo principal acima do 3D */
+/* Principal */
 .principal {
   position: relative;
-  z-index: 3;            /* acima do Canvas */
+  z-index: 3;
   pointer-events: auto;
 }
+
 /* Start */
-.start .principal{
-  display: block;
-  height: 100vh;
-  width: 100vw;
+.start .principal {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
-.start .principal h1{
+.start .principal h1 {
   font-size: 4rem;
 }
-.start .principal span{
+.start .principal span {
   color: var(--vermelho);
 }
-.start .principal .containerButtons{
+.start .principal .containerButtons {
   position: absolute;
   display: flex;
   top: 45%;
   justify-content: space-between;
   width: 90vw;
 }
-.start .principal .containerButtons button{
-  background-color: transparent;
-  outline: none;
+.start .principal .containerButtons button {
+  background: transparent;
   border: none;
+  outline: none;
   font-size: 3rem;
   color: white;
-}
-.start .principal .containerButtons button:hover{
   cursor: pointer;
 }
+
 /* Midle */
-.midle .principal{
+.midle .principal {
   display: flex;
   width: 100vw;
   height: 100vh;
   align-items: center;
 }
-.midle .principal .leftContainer{
-  background: rgba(133, 133, 133, 0.349); /* Fundo branco com 20% de opacidade */
-  backdrop-filter: blur(3.5px);          /* A propriedade que cria o desfoque */
-  -webkit-backdrop-filter: blur(3.5px);  /* Compatibilidade com navegadores WebKit (Safari) */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
-  border-left-width: 0px;
-  border-radius: 0px 20px 20px 0px;                  /* Bordas arredondadas */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Sombra para profundidade */
+.midle .principal .leftContainer {
+  background: rgba(133, 133, 133, 0.349);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-left-width: 0;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   padding: 40px;
   text-align: center;
   max-width: 50vw;
   width: 30vw;
   height: fit-content;
 }
-.midle .principal .leftContainer h1{
+.midle .principal .leftContainer h1 {
   color: var(--vermelho);
   font-size: 2rem;
 }
-.midle .principal .leftContainer span{
+.midle .principal .leftContainer span {
   color: white;
 }
-.midle .principal .rightContainer{
+.midle .principal .rightContainer {
   max-width: 50vw;
   width: 50vw;
 }
+
 /* End */
-section.end{
-  background: url("/pista_bg.jpg");
-  background-position: center;
-  background-size: cover;
+section.end {
+  background: url("/pista_bg.jpg") center/cover;
 }
-.end .principal{
+.end .principal {
   display: flex;
   justify-content: center;
   width: 100vw;
   height: 100vh;
   background-color: #0b102039;
-  backdrop-filter: blur(1px); 
+  backdrop-filter: blur(1px);
   font-size: 10rem;
-
-  
 }
-.end .principal h1{
+.end .principal h1 {
   transform: scale(0.1);
   animation-name: growAndFade;
-  animation-duration: 5s;        /* Duração da animação */
-  animation-timing-function: ease-in-out; /* Suaviza a velocidade */
-  animation-fill-mode: forwards;   /* Mantém o estado final da animação */
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
   animation-timeline: scroll(root);
   animation-range: cover 80% cover 100%;
 }
@@ -161,8 +168,19 @@ section.end{
     opacity: 1;
   }
 }
-
-.end .principal span{
+.end .principal span {
   color: var(--vermelho);
 }
-/* Responsividade */
+
+/* === MEDIA QUERIES VAZIAS PARA EDIÇÃO === */
+@media (max-width: 767px) {
+  /* celular */
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* tablet */
+}
+
+@media (min-width: 1025px) {
+  /* desktop */
+}
