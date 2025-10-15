@@ -5,7 +5,9 @@
   --vermelho: #e60912;
   font-family: "Nunito", sans-serif;
 }
-
+p{
+  font-family: "Nunito", sans-serif;
+}
 /* Tela cheia e reset simples */
 html,
 body,
@@ -233,6 +235,7 @@ header{
   animation-fill-mode: forwards;
   animation-timeline: scroll(root);
   animation-range: cover 80% cover 100%;
+  padding: 1rem 0rem;
 }
 @keyframes growAndFade {
   from {
