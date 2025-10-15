@@ -214,6 +214,7 @@ header{
   display: none;
 }
 .midle .principal .leftContainer{
+  box-sizing: border-box;
   width: 100%;
   max-width: 100%;
   border-radius: 20px;
