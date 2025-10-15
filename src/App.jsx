@@ -27,6 +27,7 @@ function useDeviceKey({ tabletMin = 768, pcMin = 1025 } = {}) {
 export default function App() {
   // Descobre se é pc, mobile ou tablet para modificar os valores padrão
   const deviceKey = useDeviceKey({ tabletMin: 768, pcMin: 1025 });
+  const baseUrl = import.meta.env.BASE_URL;
 
   // presets por dispositivo
   const presets = {
@@ -238,8 +239,8 @@ export default function App() {
   return (
     <>
       <header>
-        <img src="/RedBull.png" alt="" />
-        <img src="/RedBull_logo.png" alt="" />
+        <img src={`${baseUrl}RedBull.png`} alt="" />
+        <img src={`${baseUrl}RedBull_logo.png`} alt="" />
       </header>
 
       {/* Layer 3D fixa e transparente */}

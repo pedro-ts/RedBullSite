@@ -5,10 +5,9 @@
   "type": "module",
   "homepage": "https://pedro-ts.github.io/RedBullSite/",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
     "predeploy": "vite build && copy dist\\index.html dist\\404.html",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -b gh-pages"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",

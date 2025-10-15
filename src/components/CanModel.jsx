@@ -5,13 +5,15 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
+const CAN_MODEL_PATH = `${import.meta.env.BASE_URL}Model/redbull_lata.glb`;
+
 export default function CanModel({
   position = [0, 0, 0],
   rotation = [0, 0, 0], // em radianos
   scale = 1,
 }) {
   const group = useRef();
-  const { scene } = useGLTF("/Model/redbull_lata.glb");
+  const { scene } = useGLTF(CAN_MODEL_PATH);
 
   useEffect(() => {
     if (!group.current) return;
@@ -53,4 +55,4 @@ export default function CanModel({
   );
 }
 
-useGLTF.preload("/Model/redbull_lata.glb");
+useGLTF.preload(CAN_MODEL_PATH);

@@ -5,13 +5,15 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
+const CAR_MODEL_PATH = `${import.meta.env.BASE_URL}Model/red_bull_f1.glb`;
+
 export default function CarModel({
   position = [0, 0, 0],
   rotation = [0, 0, 0], // em radianos
   scale = 1,
 }) {
   const group = useRef();
-  const { scene } = useGLTF("/Model/red_bull_f1.glb");
+  const { scene } = useGLTF(CAR_MODEL_PATH);
 
   // aplica no primeiro frame
   useEffect(() => {
@@ -59,4 +61,4 @@ export default function CarModel({
   );
 }
 
-useGLTF.preload("/Model/red_bull_f1.glb");
+useGLTF.preload(CAR_MODEL_PATH);
