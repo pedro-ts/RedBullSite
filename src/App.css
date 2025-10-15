@@ -174,13 +174,132 @@ section.end {
 
 /* === MEDIA QUERIES VAZIAS PARA EDIÇÃO === */
 @media (max-width: 767px) {
-  /* celular */
+  section.start {
+  background: radial-gradient(60% 60% at 50% 40%, #0b1020 0%, #04060c 100%);
+  min-height: 100vh;
+}
+section.midle {
+  background: radial-gradient(60% 60% at 50% 40%, #111c2a 0%, #070b14 100%);
+  min-height: 100vh;
+}
+section.end {
+  background: radial-gradient(60% 60% at 50% 40%, #1a1a1a 0%, #0a0a0a 100%);
+  background: url("/pista_bg.jpg") center/cover;
+  min-height: 100vh;
+}
+header{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.principal{
+ box-sizing: border-box;
+}
+.start .principal h1{
+  margin-top: 10vh;
+  font-size: 10vw;
+}
+.start .principal .containerButtons {
+  position: absolute;
+  display: flex;
+  top: 37%;
+  justify-content: space-between;
+  width: 90vw;
+}
+.midle .principal .rightContainer{
+  width: 0%;
+  display: none;
+}
+.midle .principal .leftContainer{
+  width: 100%;
+  max-width: 100%;
+  border-radius: 20px;
+  margin: 0 1rem;
+  height: 65%;
+  max-height: 70%;
+}
+.end .principal{
+  box-sizing: border-box;
+}
+.end .principal h1 {
+  text-align: center;
+  margin: 20% 1rem 0 1rem;
+  font-size: 100px;
+  transform: scale(0.1);
+  animation-name: growAndFade;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-timeline: scroll(root);
+  animation-range: cover 80% cover 100%;
+}
+@keyframes growAndFade {
+  from {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   /* tablet */
+  .end .principal{
+  box-sizing: border-box;
+}
+.end .principal h1 {
+  text-align: center;
+  margin: 20% 1rem 0 1rem;
+  font-size: 120px;
+  transform: scale(0.1);
+  animation-name: growAndFade;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-timeline: scroll(root);
+  animation-range: cover 80% cover 100%;
+}
+@keyframes growAndFade {
+  from {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 }
 
 @media (min-width: 1025px) {
   /* desktop */
+  .end .principal{
+  box-sizing: border-box;
+}
+.end .principal h1 {
+  text-align: center;
+  margin: 20% 1rem 0 1rem;
+  font-size: 100px;
+  transform: scale(0.1);
+  animation-name: growAndFade;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-timeline: scroll(root);
+  animation-range: cover 80% cover 100%;
+}
+@keyframes growAndFade {
+  from {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 }

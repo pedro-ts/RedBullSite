@@ -1,6 +1,6 @@
 // App.jsx
 import "./App.css";
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { useScrollTRS } from "./hooks/useScrollTRS";
@@ -8,12 +8,47 @@ import CarModel from "./components/CarModel";
 import CanModel from "./components/CanModel";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-export default function App() {
-  const carStartDefault = [10, -1.2, -2.0];
-  const canStartDefault = [0.7, -4.3, -4.0];
+function useDeviceKey({ tabletMin = 768, pcMin = 1025 } = {}) {
+  const [key, setKey] = useState("pc");
+  useEffect(() => {
+    const decide = () => {
+      const w = window.innerWidth;
+      if (w >= pcMin) setKey("pc");
+      else if (w >= tabletMin) setKey("tablet");
+      else setKey("mobile");
+    };
+    decide();
+    window.addEventListener("resize", decide);
+    return () => window.removeEventListener("resize", decide);
+  }, [tabletMin, pcMin]);
+  return key;
+}
 
-  const [carStart, setCarStart] = useState([10, -1, -2.0]);
-  const [canStart, setCanStart] = useState([0.7, -4.3, -4.0]);
+export default function App() {
+  // Descobre se é pc, mobile ou tablet para modificar os valores padrão
+  const deviceKey = useDeviceKey({ tabletMin: 768, pcMin: 1025 });
+
+  // presets por dispositivo
+  const presets = {
+    pc: { car: [10, -1.2, -2.0], can: [0.7, -4.3, -4.0] },
+    tablet: { car: [10, -1.2, -2.0], can: [0.7, -4.3, -4.0] },
+    mobile: { car: [10, -1.2, -2.0], can: [0.45, -2.4, -4.0] },
+  };
+
+  const { carStartDefault, canStartDefault } = useMemo(() => {
+    const p = presets[deviceKey] || presets.pc;
+    return { carStartDefault: p.car, canStartDefault: p.can };
+  }, [deviceKey]);
+
+  useEffect(() => {
+    setCarStart(carStartDefault);
+    setCanStart(canStartDefault);
+  }, [deviceKey]);
+
+  // Valores padrão de inicio dos elementos na dev start
+
+  const [carStart, setCarStart] = useState(carStartDefault);
+  const [canStart, setCanStart] = useState(canStartDefault);
 
   const config = useMemo(
     () => ({
@@ -69,13 +104,13 @@ export default function App() {
               name: "start",
               position: carStart,
               rotationDeg: [0, 45, 0],
-              scale: 1.25,
+              scale: 0.9,
             },
             {
               name: "midle",
-              position: [2.0, -1.1, -1.2],
+              position: [1.6, -1.1, -1.2],
               rotationDeg: [0, -50, 0],
-              scale: 0.95,
+              scale: 0.6,
             },
             {
               name: "end",
@@ -93,7 +128,7 @@ export default function App() {
             },
             {
               name: "midle",
-              position: [-2.2, -1.4, -1.1],
+              position: [-1.5, -1.4, -1.1],
               rotationDeg: [0, -1, 25],
               scale: 0.45,
             },
@@ -111,19 +146,19 @@ export default function App() {
               name: "start",
               position: carStart,
               rotationDeg: [0, 45, 0],
-              scale: 1.1,
+              scale: 0.5,
             },
             {
               name: "midle",
-              position: [1.8, -1.1, -1.3],
-              rotationDeg: [0, -45, 0],
-              scale: 0.9,
+              position: [0, 4.5, 0],
+              rotationDeg: [0, -45, 0], 
+              scale: 0  ,
             },
             {
               name: "end",
-              position: [0, -7, -16],
-              rotationDeg: [0, 180, 0],
-              scale: 1.0,
+              position: [0, -7, -19],
+              rotationDeg: [1, 178,0],
+              scale: 0.8,
             },
           ],
           can: [
@@ -131,11 +166,11 @@ export default function App() {
               name: "start",
               position: canStart,
               rotationDeg: [0, -20, 20],
-              scale: 0.85,
+              scale: 0.65,
             },
             {
               name: "midle",
-              position: [-2.0, -1.3, -1.1],
+              position: [0, -1.3, -1.1],
               rotationDeg: [0, -1, 25],
               scale: 0.4,
             },
@@ -154,18 +189,52 @@ export default function App() {
 
   const { trs } = useScrollTRS(config);
 
+  // Carrossel -start
+
+  // helpers
+  const eqVec = (a = [], b = [], eps = 1e-4) =>
+    a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < eps);
+
+  // mapa de alternância por device
+  const swapMap = {
+    pc: {
+      A: { car: presets.pc.car, can: presets.pc.can }, // estado inicial (default do device)
+      B: { car: [0, -1.2, -2.0], can: [10, -4.3, -4.0] }, // invertido
+    },
+    tablet: {
+      A: { car: presets.tablet.car, can: presets.tablet.can },
+      B: { car: [0, -1.2, -2.0], can: [10, -4.3, -4.0] },
+    },
+    mobile: {
+      A: { car: presets.mobile.car, can: presets.mobile.can },
+      // defina o “invertido” específico do mobile:
+      B: { car: [-0.1, -0.25, -2.0], can: [10, -2.4, -4.0] },
+    },
+  };
+
   const toggleStarts = () => {
-    const same =
-      canStart[0] === 0.7 && canStart[1] === -4.3 && canStart[2] === -4.0;
-    if (same) {
-      setCanStart([10, -4.3, -4.0]);
-      setCarStart([0, -1.2, -2.0]);
+    const dev = swapMap[deviceKey] || swapMap.pc;
+
+    // Está no estado A?
+    const isA = eqVec(carStart, dev.A.car) && eqVec(canStart, dev.A.can);
+
+    // Alterna para B ou volta para A
+    if (isA) {
+      setCarStart(dev.B.car);
+      setCanStart(dev.B.can);
     } else {
-      setCarStart(carStartDefault);
-      setCanStart(canStartDefault);
+      setCarStart(dev.A.car);
+      setCanStart(dev.A.can);
     }
   };
 
+  useEffect(() => {
+    const dev = swapMap[deviceKey] || swapMap.pc;
+    setCarStart(dev.A.car);
+    setCanStart(dev.A.can);
+  }, [deviceKey]); // <- importante
+
+  // Carrossel -end
   return (
     <>
       <header>
