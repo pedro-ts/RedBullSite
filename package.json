@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://<SEU_USUARIO>.github.io/<SEU_REPO>/",
+  "homepage": "https://pedro-ts.github.io/RedBullSite/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
